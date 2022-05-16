@@ -10,6 +10,11 @@
 
             </form> --}}
 
+            <form action="/logout" method="post" class="mb-0">
+                @csrf
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+
 
 
             <table class="table">

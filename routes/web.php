@@ -16,16 +16,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['guest', 'revalidate']], function () {
-    Route::get('/', [AuthController::class,'index']);
     Route::get('/login',[AuthController::class,'index'])->name('login');
 });
+
+Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/logout', function () { return redirect('/'); });
 
 Route::post('/login',[AuthController::class,'authenticate']);
 
 
 
 Route::group(['middleware' => ['auth', 'revalidate']], function () {
-
+    
+    Route::get('/', [GoogleDriveController::class,'index']);
     Route::get('/files', [GoogleDriveController::class,'index']);
     Route::post('/upload', [GoogleDriveController::class,'upload']);
     Route::get('/download/{index}/{name}', [GoogleDriveController::class,'download']);
