@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GoogleDriveController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => ['guest', 'revalidate']], function () {
+    Route::get('/', [AuthController::class,'index']);
+    Route::get('/login',[AuthController::class,'index'])->name('login');
+});
+
+Route::post('/login',[AuthController::class,'authenticate']);
+
+
+
+Route::group(['middleware' => ['auth', 'revalidate']], function () {
+
+    Route::get('/files', [GoogleDriveController::class,'index']);
+    Route::post('/upload', [GoogleDriveController::class,'upload']);
+    Route::get('/download/{index}/{name}', [GoogleDriveController::class,'download']);
 });
