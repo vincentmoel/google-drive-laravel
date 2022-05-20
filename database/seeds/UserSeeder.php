@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         ]);
         User::create([
             'username'  => "fenny",
-            'password'  => Hash::make("semarang2022")
+            'password'  => Hash::make("fennyacms")
         ]);
     }
 }
